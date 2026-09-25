@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vaheda & Farid — Wedding Album</title>
 <style>
-*{box-sizing:border-box} body{margin:0;min-height:100vh;background:linear-gradient(135deg,#f7f1e5,#fffdf8);font-family:Georgia,serif;color:#2b2419;display:flex;flex-direction:column;align-items:center}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(135deg,#f7f1e5,#fffdf8);font-family:Georgia,serif;color:#2b2419;display:flex;flex-direction:column;align-items:center}
 header{text-align:center;padding:22px 14px 10px}.gold{color:#b68712;letter-spacing:.08em}h1{margin:0;font-size:clamp(28px,5vw,48px)}.sub{font:600 18px/1.4 Arial,sans-serif;color:#766f64;margin-top:6px}
 .album{width:min(92vw,900px);display:flex;align-items:center;justify-content:center;gap:14px;margin:8px auto 14px}.book{width:min(78vw,700px);height:min(70vh,720px);min-height:460px;background:#fff;border:3px solid #d7ad2e;border-radius:8px;box-shadow:0 14px 45px rgba(90,70,25,.18);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .page{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;background:#fff;transition:transform .38s ease,opacity .25s ease}.flip{transform:rotateY(12deg);opacity:.15}
@@ -14,12 +14,14 @@ header{text-align:center;padding:22px 14px 10px}.gold{color:#b68712;letter-spaci
 </style></head>
 <body>
 <header><div class="gold">★ EXCLUSIVE DIGITAL ALBUM ★</div><h1>Vaheda &amp; Farid</h1><div class="sub">Wedding · Nov 17, 2025</div></header>
-<div class="album"><button class="btn" id="prev">‹</button><div class="book"><img id="page" class="page" src="pages/page-01.jpg" alt="Wedding album page"></div><button class="btn" id="next">›</button></div>
+<div class="album"><button class="btn" id="prev">‹</button><div class="book"><img id="page" class="page" src="page-01.jpg" alt="Wedding album page"></div><button class="btn" id="next">›</button></div>
 <div class="controls"><div class="count" id="count">Page 1 of 26</div><button class="music" id="music">▶ Play Tenu Leke</button><div class="hint">Use the arrows or keyboard ← → to turn pages.</div></div>
 <audio id="audio" src="tenu_leke.mp3" preload="auto" loop></audio>
 <script>
-const total=26;let n=1;const img=document.getElementById('page'),count=document.getElementById('count'),prev=document.getElementById('prev'),next=document.getElementById('next'),audio=document.getElementById('audio'),music=document.getElementById('music');
-function show(k){n=Math.max(1,Math.min(total,k));img.classList.add('flip');setTimeout(()=>{img.src=`pages/page-${String(n).padStart(2,'0')}.jpg`;count.textContent=`Page ${n} of ${total}`;prev.disabled=n===1;next.disabled=n===total;img.classList.remove('flip')},180)}
+const total=26;let n=1;
+const img=document.getElementById('page'),count=document.getElementById('count'),prev=document.getElementById('prev'),next=document.getElementById('next'),audio=document.getElementById('audio'),music=document.getElementById('music');
+function show(k){n=Math.max(1,Math.min(total,k));img.classList.add('flip');setTimeout(()=>{img.src=`page-${String(n).padStart(2,'0')}.jpg`;count.textContent=`Page ${n} of ${total}`;prev.disabled=n===1;next.disabled=n===total;img.classList.remove('flip')},180)}
 prev.onclick=()=>show(n-1);next.onclick=()=>show(n+1);document.onkeydown=e=>{if(e.key==='ArrowLeft')show(n-1);if(e.key==='ArrowRight')show(n+1)};
 music.onclick=async()=>{if(audio.paused){try{await audio.play();music.textContent='❚❚ Pause Music'}catch(e){}}else{audio.pause();music.textContent='▶ Play Tenu Leke'}};
+prev.disabled=true;
 </script></body></html>
