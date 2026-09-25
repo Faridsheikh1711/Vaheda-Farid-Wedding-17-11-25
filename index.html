@@ -14,10 +14,6 @@ html,body{margin:0;background:var(--bg);color:var(--text);min-height:100%;font-f
 body{overflow-x:hidden}
 button{font:inherit}
 #openAlbum,#startAlbum{position:absolute;opacity:0;pointer-events:none}
-#openAlbum:checked ~ #rotateNotice{display:flex}
-#startAlbum:checked ~ #cover{opacity:0;visibility:hidden;pointer-events:none}
-#startAlbum:checked ~ #rotateNotice{display:none}
-
 #cover{
  position:fixed;inset:0;z-index:100;background:
  radial-gradient(circle at 50% 42%,rgba(201,164,92,.16),transparent 28%),
@@ -34,6 +30,7 @@ button{font:inherit}
 .cover-names em{color:var(--gold);font-weight:300}
 .cover-date{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)}
 .open{
+ appearance:none;-webkit-appearance:none;
  margin-top:34px;border:1px solid rgba(201,164,92,.8);background:transparent;color:#f7f0e3;
  padding:14px 30px;letter-spacing:.22em;text-transform:uppercase;font-size:10px;cursor:pointer
 }
@@ -136,8 +133,6 @@ header{
 </head>
 <body>
 
-<input type="checkbox" id="openAlbum">
-<input type="checkbox" id="startAlbum">
 <section id="cover">
  <div class="cover-card">
   <div class="crest">V · F</div>
@@ -145,7 +140,7 @@ header{
   <div class="cover-kicker">The Wedding Album</div>
   <div class="cover-names">Vaheda <em>&amp;</em> Farid</div>
   <div class="cover-date">17 · 11 · 2025</div>
-  <label class="open" for="openAlbum">Open Wedding Album</label>
+  <button class="open" id="open" type="button">Open Wedding Album</button>
   <div class="cover-note" id="note">बेहतर तरीके से देखने के लिए कृपया अपने मोबाइल को Auto Rotate पर रखें।</div>
  </div>
 </section>
@@ -281,7 +276,7 @@ play.onclick=()=>audio.paused?userMusic():pauseMusic();
 const rotateNotice=document.getElementById('rotateNotice');
 const continueAlbum=document.getElementById('continueAlbum');
 
-document.getElementById('open').onclick=()=>{
+document.getElementById('openButton').onclick=()=>{
  rotateNotice.classList.add('show');
  rotateNotice.setAttribute('aria-hidden','false');
 };
