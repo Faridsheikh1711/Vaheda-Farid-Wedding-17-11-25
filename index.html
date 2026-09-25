@@ -13,6 +13,10 @@
 html,body{margin:0;background:var(--bg);color:var(--text);min-height:100%;font-family:Inter,Arial,sans-serif}
 body{overflow-x:hidden}
 button{font:inherit}
+#openAlbum,#startAlbum{position:absolute;opacity:0;pointer-events:none}
+#openAlbum:checked ~ #rotateNotice{display:flex}
+#startAlbum:checked ~ #cover{opacity:0;visibility:hidden;pointer-events:none}
+#startAlbum:checked ~ #rotateNotice{display:none}
 
 #cover{
  position:fixed;inset:0;z-index:100;background:
@@ -132,6 +136,8 @@ header{
 </head>
 <body>
 
+<input type="checkbox" id="openAlbum">
+<input type="checkbox" id="startAlbum">
 <section id="cover">
  <div class="cover-card">
   <div class="crest">V · F</div>
@@ -139,7 +145,7 @@ header{
   <div class="cover-kicker">The Wedding Album</div>
   <div class="cover-names">Vaheda <em>&amp;</em> Farid</div>
   <div class="cover-date">17 · 11 · 2025</div>
-  <button class="open" id="open">Open Wedding Album</button>
+  <label class="open" for="openAlbum">Open Wedding Album</label>
   <div class="cover-note" id="note">बेहतर तरीके से देखने के लिए कृपया अपने मोबाइल को Auto Rotate पर रखें।</div>
  </div>
 </section>
