@@ -103,6 +103,23 @@ header{
 .footer{text-align:center;color:#716b63;font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:5px 20px 30px}
 .footer span{color:var(--gold);font-size:14px;margin:0 5px}
 
+#rotateNotice{
+ position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;
+ padding:24px;background:rgba(5,4,3,.86);backdrop-filter:blur(6px)
+}
+#rotateNotice.show{display:flex}
+.rotate-box{
+ width:min(420px,92vw);padding:30px 24px;text-align:center;background:#f4efe6;color:#17130f;
+ border:1px solid rgba(201,164,92,.8);box-shadow:0 24px 70px rgba(0,0,0,.55)
+}
+.rotate-icon{font-size:42px;color:#b18a45;margin-bottom:8px}
+.rotate-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;margin-bottom:12px}
+.rotate-text{font-size:13px;line-height:1.7;color:#5d554c}
+.rotate-box button{
+ margin-top:20px;border:1px solid #b18a45;background:#b18a45;color:#fff;
+ padding:12px 24px;letter-spacing:.12em;text-transform:uppercase;font-size:10px;cursor:pointer
+}
+
 @media(max-width:700px){
  header{height:58px;padding:0 13px}
  .album{width:96vw;padding-top:12px}
@@ -123,9 +140,18 @@ header{
   <div class="cover-names">Vaheda <em>&amp;</em> Farid</div>
   <div class="cover-date">17 · 11 · 2025</div>
   <button class="open" id="open">Open Wedding Album</button>
-  <div class="cover-note" id="note">Music will start automatically when permitted by your browser.</div>
+  <div class="cover-note" id="note">बेहतर तरीके से देखने के लिए कृपया अपने मोबाइल को Auto Rotate पर रखें।</div>
  </div>
 </section>
+
+<div id="rotateNotice" aria-hidden="true">
+ <div class="rotate-box">
+  <div class="rotate-icon">↻</div>
+  <div class="rotate-title">एक छोटी सी सलाह ❤️</div>
+  <div class="rotate-text">Album को अच्छे से देखने के लिए कृपया अपने मोबाइल का <b>Auto Rotate</b> ON रखें और मोबाइल को <b>Landscape</b> में रखें।</div>
+  <button id="continueAlbum">Album शुरू करें</button>
+ </div>
+</div>
 
 <header>
  <div class="logo">VAHEDA <b>&amp;</b> FARID</div>
@@ -160,7 +186,7 @@ header{
  </div>
 </main>
 
-<div class="footer">A lifetime of memories <span>♡</span> Vaheda &amp; Farid</div>
+<div class="footer">A lifetime of memories <span>♡</span> Vaheda &amp; Farid<br><br>Made by <b>Farid Sheikh</b> &nbsp; Mob. <b>+91 9723148848</b></div>
 <audio id="audio" src="tenu_leke.mp3" preload="auto" loop></audio>
 
 <script>
@@ -246,10 +272,20 @@ prev.onclick=()=>turn(-1);
 music.onclick=()=>audio.paused?userMusic():pauseMusic();
 play.onclick=()=>audio.paused?userMusic():pauseMusic();
 
-document.getElementById('open').onclick=async()=>{
+const rotateNotice=document.getElementById('rotateNotice');
+const continueAlbum=document.getElementById('continueAlbum');
+
+document.getElementById('open').onclick=()=>{
+ rotateNotice.classList.add('show');
+ rotateNotice.setAttribute('aria-hidden','false');
+};
+
+continueAlbum.onclick=async()=>{
+ rotateNotice.classList.remove('show');
+ rotateNotice.setAttribute('aria-hidden','true');
  cover.classList.add('hide');
  const ok=await tryMusic();
- if(!ok)note.textContent='Tap the music button anytime to start Tenu Leke.';
+ if(!ok)note.textContent='संगीत शुरू करने के लिए Music बटन दबाएँ।';
 };
 
 document.getElementById('full').onclick=()=>{
