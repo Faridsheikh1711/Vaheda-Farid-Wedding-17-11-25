@@ -3,235 +3,285 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0a09">
-<title>Vaheda & Farid — Our Wedding Story</title>
+<meta name="theme-color" content="#090807">
+<title>Vaheda & Farid — Luxury Wedding Album</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap');
 
-:root{
-  --ink:#0b0a09;--cream:#f5f0e7;--gold:#c9a45c;--muted:#bcb5aa;
-}
+:root{--bg:#090807;--paper:#f4efe6;--gold:#c9a45c;--text:#eee8dc;--muted:#aaa298}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--ink);color:var(--cream)}
-body{font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+html,body{margin:0;background:var(--bg);color:var(--text);min-height:100%;font-family:Inter,Arial,sans-serif}
+body{overflow-x:hidden}
 button{font:inherit}
-#intro{
-  position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
-  background:
-    radial-gradient(circle at 50% 35%,rgba(201,164,92,.12),transparent 30%),
-    linear-gradient(145deg,#050505,#171411 65%,#080706);
-  transition:opacity .8s ease,visibility .8s ease;
-}
-#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-.intro-inner{text-align:center;padding:28px;max-width:760px;animation:rise 1.2s ease both}
-.monogram{font-family:"Cormorant Garamond",serif;font-size:54px;letter-spacing:.08em;color:var(--gold);margin-bottom:20px}
-.kicker{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:#d4cfc6;margin-bottom:18px}
-.names{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(62px,13vw,130px);font-weight:300;line-height:.8;letter-spacing:-.035em}
-.amp{font-style:italic;color:var(--gold);font-size:.55em}
-.date{margin:28px 0 30px;color:var(--muted);font-size:12px;letter-spacing:.28em;text-transform:uppercase}
-.open-btn{
-  border:1px solid rgba(201,164,92,.7);background:transparent;color:var(--cream);
-  padding:13px 27px;letter-spacing:.18em;text-transform:uppercase;font-size:11px;
-  cursor:pointer;transition:.3s
-}
-.open-btn:hover{background:var(--gold);color:#111}
-.note{margin-top:16px;font-size:10px;color:#888;letter-spacing:.08em}
 
-main{min-height:100vh;background:
-  radial-gradient(circle at 50% 0%,rgba(201,164,92,.07),transparent 35%),
-  #0b0a09}
-.topbar{
-  height:72px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(201,164,92,.18)
+#cover{
+ position:fixed;inset:0;z-index:100;background:
+ radial-gradient(circle at 50% 42%,rgba(201,164,92,.16),transparent 28%),
+ linear-gradient(135deg,#050504,#17120d 58%,#060504);
+ display:flex;align-items:center;justify-content:center;
+ transition:opacity .9s ease,visibility .9s ease;
 }
-.brand{font-family:"Cormorant Garamond",serif;font-size:22px;letter-spacing:.08em}
-.brand span{color:var(--gold)}
-.top-actions{display:flex;gap:8px}
-.icon-btn{
-  width:38px;height:38px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.03);
-  color:var(--cream);border-radius:50%;cursor:pointer
+#cover.hide{opacity:0;visibility:hidden;pointer-events:none}
+.cover-card{text-align:center;padding:30px;animation:coverIn 1.2s ease both}
+.crest{font-family:"Cormorant Garamond",serif;color:var(--gold);font-size:18px;letter-spacing:.42em;margin-left:.42em}
+.cover-line{width:80px;height:1px;background:var(--gold);opacity:.7;margin:20px auto}
+.cover-kicker{font-size:10px;letter-spacing:.48em;text-transform:uppercase;color:#c9c2b7}
+.cover-names{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;font-size:clamp(65px,13vw,135px);line-height:.78;margin:24px 0 18px}
+.cover-names em{color:var(--gold);font-weight:300}
+.cover-date{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)}
+.open{
+ margin-top:34px;border:1px solid rgba(201,164,92,.8);background:transparent;color:#f7f0e3;
+ padding:14px 30px;letter-spacing:.22em;text-transform:uppercase;font-size:10px;cursor:pointer
 }
-.stage{width:min(1200px,94vw);margin:0 auto;padding:24px 0 34px}
-.photo-frame{
-  position:relative;width:100%;height:min(76vh,780px);min-height:430px;
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-  background:#11100e;border:1px solid rgba(201,164,92,.3);
-  box-shadow:0 20px 70px rgba(0,0,0,.5)
-}
-.photo-frame:before,.photo-frame:after{content:"";position:absolute;z-index:2;pointer-events:none}
-.photo-frame:before{inset:14px;border:1px solid rgba(255,255,255,.12)}
-.photo-frame:after{inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08),transparent 35%,transparent 65%,rgba(0,0,0,.25))}
-#page{
-  width:100%;height:100%;object-fit:contain;display:block;
-  transition:opacity .42s ease,transform .55s cubic-bezier(.2,.7,.2,1);
-}
-.turn-out{opacity:0;transform:scale(.985) translateX(22px)}
-.caption{
-  position:absolute;z-index:4;left:32px;bottom:27px;right:32px;
-  display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
-  pointer-events:none
-}
-.caption-title{font-family:"Cormorant Garamond",serif;font-size:24px;letter-spacing:.04em}
-.caption-page{font-size:10px;letter-spacing:.24em;color:#d5cfc4;text-transform:uppercase}
-.nav-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:20px}
-.nav-btn{
-  border:1px solid rgba(201,164,92,.55);background:transparent;color:var(--cream);
-  width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:24px
-}
-.nav-btn:disabled{opacity:.25;cursor:not-allowed}
-.progress{flex:1;max-width:680px;height:2px;background:rgba(255,255,255,.12);position:relative}
-.progress i{display:block;height:100%;width:3.85%;background:var(--gold);transition:width .35s ease}
-.bottom-row{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:17px}
-.text-btn{background:none;border:0;color:#aaa49a;font-size:10px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;padding:6px}
-.text-btn:hover{color:var(--gold)}
-.footer{text-align:center;padding:12px 20px 42px;color:#777066;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
-.footer .heart{color:var(--gold);font-size:14px;margin:0 4px}
+.open:hover{background:var(--gold);color:#111}
+.cover-note{margin-top:13px;font-size:9px;color:#81796e;letter-spacing:.08em}
+@keyframes coverIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
 
-@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+header{
+ height:66px;display:flex;align-items:center;justify-content:space-between;
+ padding:0 26px;border-bottom:1px solid rgba(201,164,92,.18)
+}
+.logo{font-family:"Cormorant Garamond",serif;font-size:22px;letter-spacing:.12em}
+.logo b{color:var(--gold);font-weight:400}
+.tools{display:flex;gap:8px}
+.tool{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:#ffffff08;color:#eee;cursor:pointer}
+
+.album{width:min(1180px,94vw);margin:0 auto;padding:24px 0 38px}
+.book-wrap{
+ width:100%;display:flex;justify-content:center;align-items:center;
+ perspective:2400px;
+}
+.book{
+ position:relative;width:min(1040px,100%);height:min(73vh,720px);min-height:430px;
+ transform-style:preserve-3d;
+ filter:drop-shadow(0 25px 35px rgba(0,0,0,.55));
+}
+.book:before{
+ content:"";position:absolute;left:50%;top:0;bottom:0;width:12px;transform:translateX(-50%);
+ background:linear-gradient(90deg,#0006,#fff1 45%,#0007);
+ z-index:20;pointer-events:none;opacity:.7
+}
+.page-surface{
+ position:absolute;inset:0;background:#151310;overflow:hidden;
+ border:1px solid rgba(201,164,92,.3);transform-style:preserve-3d;
+}
+.page-surface img{width:100%;height:100%;object-fit:contain;display:block;background:#151310}
+.page-surface:after{content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(90deg,rgba(0,0,0,.22),transparent 16%,transparent 84%,rgba(0,0,0,.2))}
+#leftPage{clip-path:inset(0 50% 0 0)}
+#rightPage{clip-path:inset(0 0 0 50%)}
+.sheet{
+ position:absolute;top:0;left:50%;width:50%;height:100%;z-index:30;
+ transform-origin:left center;transform-style:preserve-3d;
+ transition:transform 850ms cubic-bezier(.2,.72,.18,1);
+}
+.sheet.turn{transform:rotateY(-180deg)}
+.face{
+ position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;
+ border:1px solid rgba(201,164,92,.26);background:#151310;
+}
+.face img{width:200%;height:100%;object-fit:contain;background:#151310}
+.front img{transform:translateX(-50%)}
+.back{transform:rotateY(180deg)}
+.back img{transform:none}
+.face:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0003,transparent 30%,#0002)}
+
+.page-label{
+ text-align:center;margin-top:15px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#aaa197
+}
+.controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:15px}
+.arrow{
+ width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,164,92,.55);
+ background:transparent;color:#eee7db;font-size:26px;cursor:pointer
+}
+.arrow:disabled{opacity:.22;cursor:not-allowed}
+.track{width:min(600px,50vw);height:2px;background:#ffffff18}
+.track i{display:block;height:100%;background:var(--gold);width:3.85%;transition:width .5s ease}
+.subcontrols{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:12px}
+.sub{background:none;border:0;color:#9e968c;font-size:9px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;padding:6px}
+.sub:hover{color:var(--gold)}
+.footer{text-align:center;color:#716b63;font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:5px 20px 30px}
+.footer span{color:var(--gold);font-size:14px;margin:0 5px}
+
 @media(max-width:700px){
-  .topbar{height:62px;padding:0 15px}.brand{font-size:19px}
-  .stage{width:94vw;padding-top:12px}.photo-frame{height:70vh;min-height:420px}
-  .caption{left:20px;right:20px;bottom:20px}.caption-title{font-size:20px}
-  .nav-row{gap:10px}.progress{max-width:none}.nav-btn{width:44px;height:44px}
-  .names{font-size:clamp(58px,18vw,100px)}
+ header{height:58px;padding:0 13px}
+ .album{width:96vw;padding-top:12px}
+ .book{height:68vh;min-height:390px}
+ .book:before{width:7px}
+ .controls{gap:8px}.track{width:45vw}.arrow{width:44px;height:44px}
+ .cover-names{font-size:clamp(58px,19vw,105px)}
 }
 </style>
 </head>
 <body>
 
-<section id="intro" aria-label="Wedding album opening">
-  <div class="intro-inner">
-    <div class="monogram">V · F</div>
-    <div class="kicker">Our Wedding Story</div>
-    <div class="names">Vaheda <span class="amp">&amp;</span> Farid</div>
-    <div class="date">17 · November · 2025</div>
-    <button class="open-btn" id="openAlbum">Open Our Album</button>
-    <div class="note" id="introNote">Music will start automatically when your browser allows it.</div>
-  </div>
+<section id="cover">
+ <div class="cover-card">
+  <div class="crest">V · F</div>
+  <div class="cover-line"></div>
+  <div class="cover-kicker">The Wedding Album</div>
+  <div class="cover-names">Vaheda <em>&amp;</em> Farid</div>
+  <div class="cover-date">17 · 11 · 2025</div>
+  <button class="open" id="open">Open Wedding Album</button>
+  <div class="cover-note" id="note">Music will start automatically when permitted by your browser.</div>
+ </div>
 </section>
 
-<main>
-  <header class="topbar">
-    <div class="brand">V<span>&amp;</span>F</div>
-    <div class="top-actions">
-      <button class="icon-btn" id="music" aria-label="Play music" title="Music">♪</button>
-      <button class="icon-btn" id="full" aria-label="Fullscreen" title="Fullscreen">⛶</button>
-    </div>
-  </header>
+<header>
+ <div class="logo">VAHEDA <b>&amp;</b> FARID</div>
+ <div class="tools">
+  <button class="tool" id="music" title="Music">♪</button>
+  <button class="tool" id="full" title="Fullscreen">⛶</button>
+ </div>
+</header>
 
-  <section class="stage">
-    <div class="photo-frame">
-      <img id="page" src="page-01.jpg" alt="Wedding album page">
-      <div class="caption">
-        <div class="caption-title">Vaheda &amp; Farid</div>
-        <div class="caption-page" id="captionPage">01 / 26</div>
-      </div>
-    </div>
+<main class="album">
+ <div class="book-wrap">
+  <div class="book" id="book">
+   <div class="page-surface" id="leftPage"><img src="page-01.jpg" alt=""></div>
+   <div class="page-surface" id="rightPage"><img src="page-02.jpg" alt=""></div>
 
-    <div class="nav-row">
-      <button class="nav-btn" id="prev" aria-label="Previous page">‹</button>
-      <div class="progress" aria-hidden="true"><i id="bar"></i></div>
-      <button class="nav-btn" id="next" aria-label="Next page">›</button>
-    </div>
+   <div class="sheet" id="sheet">
+    <div class="face front"><img id="frontImg" src="page-01.jpg" alt="Wedding album page"></div>
+    <div class="face back"><img id="backImg" src="page-02.jpg" alt="Wedding album page"></div>
+   </div>
+  </div>
+ </div>
 
-    <div class="bottom-row">
-      <button class="text-btn" id="playMusic">Play Tenu Leke</button>
-      <button class="text-btn" id="auto">Auto Play</button>
-    </div>
-  </section>
-
-  <div class="footer">A day to remember <span class="heart">♡</span> a lifetime to cherish</div>
+ <div class="page-label" id="label">01 — 02 / 26</div>
+ <div class="controls">
+  <button class="arrow" id="prev" aria-label="Previous">‹</button>
+  <div class="track"><i id="progress"></i></div>
+  <button class="arrow" id="next" aria-label="Next">›</button>
+ </div>
+ <div class="subcontrols">
+  <button class="sub" id="play">Play Tenu Leke</button>
+  <button class="sub" id="auto">Auto Turn Pages</button>
+ </div>
 </main>
 
+<div class="footer">A lifetime of memories <span>♡</span> Vaheda &amp; Farid</div>
 <audio id="audio" src="tenu_leke.mp3" preload="auto" loop></audio>
 
 <script>
 const total=26;
-let n=1, autoTimer=null;
-const img=document.getElementById('page');
-const count=document.getElementById('captionPage');
-const bar=document.getElementById('bar');
+let n=1, busy=false, autoTimer=null;
+const sheet=document.getElementById('sheet');
+const frontImg=document.getElementById('frontImg');
+const backImg=document.getElementById('backImg');
+const leftImg=document.querySelector('#leftPage img');
+const rightImg=document.querySelector('#rightPage img');
+const label=document.getElementById('label');
+const progress=document.getElementById('progress');
 const prev=document.getElementById('prev');
 const next=document.getElementById('next');
 const audio=document.getElementById('audio');
 const music=document.getElementById('music');
-const playMusic=document.getElementById('playMusic');
-const intro=document.getElementById('intro');
-const openAlbum=document.getElementById('openAlbum');
-const introNote=document.getElementById('introNote');
+const play=document.getElementById('play');
+const cover=document.getElementById('cover');
+const note=document.getElementById('note');
 
+function file(k){return `page-${String(k).padStart(2,'0')}.jpg`}
 function update(){
-  count.textContent=String(n).padStart(2,'0')+' / '+String(total).padStart(2,'0');
-  bar.style.width=(n/total*100)+'%';
-  prev.disabled=n===1; next.disabled=n===total;
+ const right=Math.min(total,n+1);
+ label.textContent=String(n).padStart(2,'0')+' — '+String(right).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+ progress.style.width=(right/total*100)+'%';
+ prev.disabled=n===1; next.disabled=n>=total-1;
 }
-function show(k){
-  const nextN=Math.max(1,Math.min(total,k));
-  if(nextN===n)return;
-  img.classList.add('turn-out');
-  setTimeout(()=>{
-    n=nextN;
-    img.src=`page-${String(n).padStart(2,'0')}.jpg`;
-    update();
-    requestAnimationFrame(()=>img.classList.remove('turn-out'));
-  },230);
+function preload(k){
+ if(k<1||k>total)return;
+ const im=new Image();im.src=file(k);
 }
-function hideIntro(){intro.classList.add('hide')}
-function setMusicUI(){
-  const playing=!audio.paused;
-  music.textContent=playing?'❚❚':'♪';
-  music.setAttribute('aria-label',playing?'Pause music':'Play music');
-  playMusic.textContent=playing?'Pause Tenu Leke':'Play Tenu Leke';
+function setPages(){
+ leftImg.src=file(n);
+ rightImg.src=file(Math.min(total,n+1));
+ frontImg.src=file(n);
+ backImg.src=file(Math.min(total,n+1));
+ preload(n+2);preload(n-1);
+ update();
+}
+function turn(dir){
+ if(busy)return;
+ if(dir>0 && n>=total-1)return;
+ if(dir<0 && n<=1)return;
+ busy=true;
+ if(dir>0){
+   const nextN=n+2;
+   const upcoming=nextN<=total?file(nextN):file(total);
+   backImg.src=upcoming;
+   sheet.classList.add('turn');
+   setTimeout(()=>{
+     n+=2;
+     sheet.classList.remove('turn');
+     setPages();
+     busy=false;
+   },850);
+ }else{
+   const prevN=n-2;
+   const upcoming=prevN>=1?file(prevN):file(1);
+   frontImg.src=upcoming;
+   sheet.style.transition='none';
+   sheet.classList.add('turn');
+   requestAnimationFrame(()=>requestAnimationFrame(()=>{
+     sheet.classList.remove('turn');
+     requestAnimationFrame(()=>{sheet.style.transition='transform 850ms cubic-bezier(.2,.72,.18,1)'});
+   }));
+   setTimeout(()=>{
+     n=Math.max(1,n-2);setPages();busy=false;
+   },850);
+ }
 }
 async function tryMusic(){
-  try{await audio.play();setMusicUI();hideIntro();return true}
-  catch(e){return false}
+ try{await audio.play();music.textContent='❚❚';play.textContent='Pause Tenu Leke';return true}
+ catch(e){return false}
 }
 async function userMusic(){
-  try{await audio.play();setMusicUI();hideIntro()}
-  catch(e){}
+ try{await audio.play();music.textContent='❚❚';play.textContent='Pause Tenu Leke'}
+ catch(e){}
 }
-prev.onclick=()=>show(n-1);
-next.onclick=()=>show(n+1);
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowLeft')show(n-1);
-  if(e.key==='ArrowRight')show(n+1);
-  if(e.code==='Space'){e.preventDefault();userMusic()}
-});
-music.onclick=()=>audio.paused?userMusic():(audio.pause(),setMusicUI());
-playMusic.onclick=()=>audio.paused?userMusic():(audio.pause(),setMusicUI());
-openAlbum.onclick=async()=>{hideIntro();await userMusic()};
-audio.addEventListener('play',setMusicUI);
-audio.addEventListener('pause',setMusicUI);
+function pauseMusic(){audio.pause();music.textContent='♪';play.textContent='Play Tenu Leke'}
 
-let startX=0;
-img.addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX},{passive:true});
-img.addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-startX;
-  if(Math.abs(dx)>45)show(n+(dx<0?1:-1));
-},{passive:true});
+next.onclick=()=>turn(1);
+prev.onclick=()=>turn(-1);
+music.onclick=()=>audio.paused?userMusic():pauseMusic();
+play.onclick=()=>audio.paused?userMusic():pauseMusic();
+
+document.getElementById('open').onclick=async()=>{
+ cover.classList.add('hide');
+ const ok=await tryMusic();
+ if(!ok)note.textContent='Tap the music button anytime to start Tenu Leke.';
+};
 
 document.getElementById('full').onclick=()=>{
-  if(document.fullscreenElement)document.exitFullscreen();
-  else document.documentElement.requestFullscreen?.();
+ if(document.fullscreenElement)document.exitFullscreen();
+ else document.documentElement.requestFullscreen?.();
 };
 
 document.getElementById('auto').onclick=()=>{
-  if(autoTimer){clearInterval(autoTimer);autoTimer=null;document.getElementById('auto').textContent='Auto Play'}
-  else{
-    autoTimer=setInterval(()=>{if(n<total)show(n+1);else{clearInterval(autoTimer);autoTimer=null}},4500);
-    document.getElementById('auto').textContent='Stop Auto Play';
-  }
+ if(autoTimer){
+  clearInterval(autoTimer);autoTimer=null;
+  document.getElementById('auto').textContent='Auto Turn Pages';
+ }else{
+  document.getElementById('auto').textContent='Stop Auto Turn';
+  autoTimer=setInterval(()=>{
+   if(n<total-1)turn(1);else{clearInterval(autoTimer);autoTimer=null;document.getElementById('auto').textContent='Auto Turn Pages'}
+  },5200);
+ }
 };
 
-update();
-window.addEventListener('load',()=>{
-  setTimeout(async()=>{
-    const ok=await tryMusic();
-    if(!ok) introNote.textContent='Tap “Open Our Album” to begin the experience.';
-  },300);
+document.addEventListener('keydown',e=>{
+ if(e.key==='ArrowRight')turn(1);
+ if(e.key==='ArrowLeft')turn(-1);
 });
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&audio.paused)tryMusic()});
+let startX=0;
+document.getElementById('book').addEventListener('touchstart',e=>startX=e.changedTouches[0].clientX,{passive:true});
+document.getElementById('book').addEventListener('touchend',e=>{
+ const dx=e.changedTouches[0].clientX-startX;
+ if(Math.abs(dx)>45)turn(dx<0?1:-1);
+},{passive:true});
+
+setPages();
+window.addEventListener('load',()=>setTimeout(async()=>{const ok=await tryMusic();if(!ok)note.textContent='Tap “Open Wedding Album” to begin.'},350));
 </script>
 </body>
 </html>
