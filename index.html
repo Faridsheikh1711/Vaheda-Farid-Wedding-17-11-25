@@ -86,6 +86,8 @@ header{
 .back{transform:rotateY(180deg)}
 .back img{transform:none}
 .face:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0003,transparent 30%,#0002)}
+.page-credit{position:absolute;right:18px;bottom:16px;z-index:60;color:rgba(238,232,220,.82);font-size:9px;letter-spacing:.12em;text-align:right;text-transform:none;text-shadow:0 1px 5px rgba(0,0,0,.9);pointer-events:none;background:rgba(0,0,0,.18);padding:5px 7px;border:1px solid rgba(201,164,92,.22);border-radius:2px}
+.page-credit b{color:#c9a45c;font-weight:500}
 
 .page-label{
  text-align:center;margin-top:15px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#aaa197
@@ -141,18 +143,10 @@ header{
   <div class="cover-names">Vaheda <em>&amp;</em> Farid</div>
   <div class="cover-date">17 · 11 · 2025</div>
   <button class="open" id="open" type="button">Open Wedding Album</button>
-  <div class="cover-note" id="note">बेहतर तरीके से देखने के लिए कृपया अपने मोबाइल को Auto Rotate पर रखें।</div>
+  <div class="cover-note" id="note">For the best view, please keep your mobile on Auto Rotate.</div>
  </div>
 </section>
 
-<div id="rotateNotice" aria-hidden="true">
- <div class="rotate-box">
-  <div class="rotate-icon">↻</div>
-  <div class="rotate-title">एक छोटी सी सलाह ❤️</div>
-  <div class="rotate-text">Album को अच्छे से देखने के लिए कृपया अपने मोबाइल का <b>Auto Rotate</b> ON रखें और मोबाइल को <b>Landscape</b> में रखें।</div>
-  <button id="continueAlbum">Album शुरू करें</button>
- </div>
-</div>
 
 <header>
  <div class="logo">VAHEDA <b>&amp;</b> FARID</div>
@@ -166,7 +160,7 @@ header{
  <div class="book-wrap">
   <div class="book" id="book">
    <div class="page-surface" id="leftPage"><img src="page-01.jpg" alt=""></div>
-   <div class="page-surface" id="rightPage"><img src="page-02.jpg" alt=""></div>
+   <div class="page-surface" id="rightPage"><img src="page-02.jpg" alt=""><div class="page-credit">Made by <b>Farid Sheikh</b><br>Mob. <b>+91 9723148848</b></div></div>
 
    <div class="sheet" id="sheet">
     <div class="face front"><img id="frontImg" src="page-01.jpg" alt="Wedding album page"></div>
@@ -191,7 +185,7 @@ header{
 <audio id="audio" src="tenu_leke.mp3" preload="auto" loop></audio>
 
 <script>
-const total=26;
+const total=27;
 let n=1, busy=false, autoTimer=null;
 const sheet=document.getElementById('sheet');
 const frontImg=document.getElementById('frontImg');
@@ -208,7 +202,23 @@ const play=document.getElementById('play');
 const cover=document.getElementById('cover');
 const note=document.getElementById('note');
 
-function file(k){return `page-${String(k).padStart(2,'0')}.jpg`}
+function finalPage(){
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+ <defs><radialGradient id="g" cx="50%" cy="45%"><stop offset="0" stop-color="#2b2115"/><stop offset=".55" stop-color="#17120d"/><stop offset="1" stop-color="#070605"/></radialGradient></defs>
+ <rect width="1600" height="1000" fill="url(#g)"/>
+ <rect x="65" y="65" width="1470" height="870" rx="4" fill="none" stroke="#c9a45c" stroke-opacity=".45"/>
+ <text x="800" y="320" text-anchor="middle" fill="#c9a45c" font-family="Georgia,serif" font-size="34" letter-spacing="10">WITH LOVE &amp; GRATITUDE</text>
+ <line x1="650" y1="375" x2="950" y2="375" stroke="#c9a45c" stroke-opacity=".65"/>
+ <text x="800" y="480" text-anchor="middle" fill="#f4efe6" font-family="Georgia,serif" font-size="68">Thank You</text>
+ <text x="800" y="555" text-anchor="middle" fill="#aaa298" font-family="Arial,sans-serif" font-size="24" letter-spacing="3">FOR BEING PART OF OUR BEAUTIFUL JOURNEY</text>
+ <text x="800" y="680" text-anchor="middle" fill="#c9a45c" font-family="Georgia,serif" font-size="30">Made by Farid Sheikh</text>
+ <text x="800" y="730" text-anchor="middle" fill="#eee8dc" font-family="Arial,sans-serif" font-size="25" letter-spacing="2">Mob. +91 9723148848</text>
+ <text x="800" y="850" text-anchor="middle" fill="#81796e" font-family="Arial,sans-serif" font-size="18" letter-spacing="4">VAHEDA &amp; FARID · 17 · 11 · 2025</text>
+ </svg>`;
+ return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+}
+const FINAL_PAGE=finalPage();
+function file(k){if(k===27)return FINAL_PAGE; if(k<1||k>26)return ''; return `page-${String(k).padStart(2,'0')}.jpg`}
 function update(){
  const right=Math.min(total,n+1);
  label.textContent=String(n).padStart(2,'0')+' — '+String(right).padStart(2,'0')+' / '+String(total).padStart(2,'0');
@@ -221,7 +231,7 @@ function preload(k){
 }
 function setPages(){
  leftImg.src=file(n);
- rightImg.src=file(Math.min(total,n+1));
+ rightImg.src=(n===27?'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=':file(Math.min(total,n+1)));
  frontImg.src=file(n);
  backImg.src=file(Math.min(total,n+1));
  preload(n+2);preload(n-1);
@@ -273,21 +283,11 @@ prev.onclick=()=>turn(-1);
 music.onclick=()=>audio.paused?userMusic():pauseMusic();
 play.onclick=()=>audio.paused?userMusic():pauseMusic();
 
-const rotateNotice=document.getElementById('rotateNotice');
-const continueAlbum=document.getElementById('continueAlbum');
-
-document.getElementById('open').onclick=()=>{
- rotateNotice.classList.add('show');
- rotateNotice.setAttribute('aria-hidden','false');
-};
-
-continueAlbum.onclick=async()=>{
- rotateNotice.classList.remove('show');
- rotateNotice.setAttribute('aria-hidden','true');
+document.querySelector('.open').addEventListener('click',async()=>{
  cover.classList.add('hide');
  const ok=await tryMusic();
- if(!ok)note.textContent='संगीत शुरू करने के लिए Music बटन दबाएँ।';
-};
+ if(!ok)note.textContent='Press the Music button to start the song.';
+});
 
 document.getElementById('full').onclick=()=>{
  if(document.fullscreenElement)document.exitFullscreen();
@@ -318,7 +318,7 @@ document.getElementById('book').addEventListener('touchend',e=>{
 },{passive:true});
 
 setPages();
-window.addEventListener('load',()=>setTimeout(async()=>{const ok=await tryMusic();if(!ok)note.textContent='Tap “Open Wedding Album” to begin.'},350));
+window.addEventListener('load',()=>setTimeout(async()=>{const ok=await tryMusic();if(!ok)note.textContent='Press the Music button to start the song.'},350));
 </script>
 </body>
 </html>
