@@ -62,6 +62,8 @@ header{
  background:linear-gradient(90deg,#0006,#fff1 45%,#0007);
  z-index:20;pointer-events:none;opacity:.7
 }
+.book.final-view:before{display:none}
+.book.final-view .page-surface{border-color:rgba(201,164,92,.45)}
 .page-surface{
  position:absolute;inset:0;background:#151310;overflow:hidden;
  border:1px solid rgba(201,164,92,.3);transform-style:preserve-3d;
@@ -86,8 +88,8 @@ header{
 .back{transform:rotateY(180deg)}
 .back img{transform:none}
 .face:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0003,transparent 30%,#0002)}
-.page-credit{position:absolute;right:18px;bottom:16px;z-index:60;color:#3d342a;font-size:9px;letter-spacing:.12em;text-align:right;text-transform:none;text-shadow:none;pointer-events:none;background:rgba(255,255,255,.88);padding:6px 9px;border:1px solid rgba(130,105,70,.35);border-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.page-credit b{color:#6f542e;font-weight:600}
+.page-credit{position:absolute;right:18px;bottom:16px;z-index:60;color:#fff;font-size:10px;line-height:1.55;letter-spacing:.08em;text-align:right;text-transform:none;text-shadow:0 1px 3px rgba(0,0,0,.85);pointer-events:none;background:rgba(12,10,8,.78);padding:7px 10px;border:1px solid rgba(201,164,92,.65);border-radius:3px;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.page-credit b{color:#f1d58e;font-weight:600}
 
 .page-label{
  text-align:center;margin-top:15px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#aaa197
@@ -201,6 +203,7 @@ const music=document.getElementById('music');
 const play=document.getElementById('play');
 const cover=document.getElementById('cover');
 const note=document.getElementById('note');
+const pageCredit=document.querySelector('.page-credit');
 
 function finalPage(){
  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
@@ -229,8 +232,11 @@ function preload(k){
  const im=new Image();im.src=file(k);
 }
 function setPages(){
+ const book=document.getElementById('book');
+ book.classList.toggle('final-view', n===27);
+ if(pageCredit)pageCredit.style.display=n===27?'none':'block';
  leftImg.src=file(n);
- rightImg.src=(n===27?'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=':file(Math.min(total,n+1)));
+ rightImg.src=(n===27?file(27):file(Math.min(total,n+1)));
  frontImg.src=file(n);
  backImg.src=file(Math.min(total,n+1));
  preload(n+2);preload(n-1);
