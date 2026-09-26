@@ -3,327 +3,75 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#090807">
-<title>Vaheda & Farid — Luxury Wedding Album</title>
+<title>Vaheda & Farid — Wedding Album</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap');
-
-:root{--bg:#090807;--paper:#f4efe6;--gold:#c9a45c;--text:#eee8dc;--muted:#aaa298}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);min-height:100%;font-family:Inter,Arial,sans-serif}
-body{overflow-x:hidden}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+:root{--gold:#d2ad62;--gold2:#f1d693;--cream:#f7f1e6;--muted:#aaa096;--bg:#070605}
+*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:#050403;color:#eee;font-family:Montserrat,Arial,sans-serif}body{overflow-x:hidden}
 button{font:inherit}
-#openAlbum,#startAlbum{position:absolute;opacity:0;pointer-events:none}
-#cover{
- position:fixed;inset:0;z-index:100;background:
- radial-gradient(circle at 50% 42%,rgba(201,164,92,.16),transparent 28%),
- linear-gradient(135deg,#050504,#17120d 58%,#060504);
- display:flex;align-items:center;justify-content:center;
- transition:opacity .9s ease,visibility .9s ease;
-}
+body:before{content:"";position:fixed;inset:0;z-index:-5;background:radial-gradient(circle at 50% 20%,#2a2116 0,#100c08 45%,#030202 100%)}
+body:after{content:"";position:fixed;inset:0;z-index:-4;opacity:.12;pointer-events:none;background-image:radial-gradient(#fff 0.5px,transparent .5px);background-size:5px 5px}
+#cover{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;background:radial-gradient(circle at 50% 35%,#3a2c1b 0,#120d08 48%,#030202 100%);transition:opacity .9s ease,visibility .9s ease}
 #cover.hide{opacity:0;visibility:hidden;pointer-events:none}
-.cover-card{text-align:center;padding:30px;animation:coverIn 1.2s ease both}
-.crest{font-family:"Cormorant Garamond",serif;color:var(--gold);font-size:18px;letter-spacing:.42em;margin-left:.42em}
-.cover-line{width:80px;height:1px;background:var(--gold);opacity:.7;margin:20px auto}
-.cover-kicker{font-size:10px;letter-spacing:.48em;text-transform:uppercase;color:#c9c2b7}
-.cover-names{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;font-size:clamp(65px,13vw,135px);line-height:.78;margin:24px 0 18px}
-.cover-names em{color:var(--gold);font-weight:300}
-.cover-date{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)}
-.open{
- appearance:none;-webkit-appearance:none;
- margin-top:34px;border:1px solid rgba(201,164,92,.8);background:transparent;color:#f7f0e3;
- padding:14px 30px;letter-spacing:.22em;text-transform:uppercase;font-size:10px;cursor:pointer
-}
-.open:hover{background:var(--gold);color:#111}
-.cover-note{margin-top:13px;font-size:9px;color:#81796e;letter-spacing:.08em}
-@keyframes coverIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
-
-header{
- height:66px;display:flex;align-items:center;justify-content:space-between;
- padding:0 26px;border-bottom:1px solid rgba(201,164,92,.18)
-}
-.logo{font-family:"Cormorant Garamond",serif;font-size:22px;letter-spacing:.12em}
-.logo b{color:var(--gold);font-weight:400}
-.tools{display:flex;gap:8px}
-.tool{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:#ffffff08;color:#eee;cursor:pointer}
-
-.album{width:min(1180px,94vw);margin:0 auto;padding:24px 0 38px}
-.book-wrap{
- width:100%;display:flex;justify-content:center;align-items:center;
- perspective:2400px;
-}
-.book{
- position:relative;width:min(1040px,100%);height:min(73vh,720px);min-height:430px;
- transform-style:preserve-3d;
- filter:drop-shadow(0 25px 35px rgba(0,0,0,.55));
-}
-.book:before{
- content:"";position:absolute;left:50%;top:0;bottom:0;width:12px;transform:translateX(-50%);
- background:linear-gradient(90deg,#0006,#fff1 45%,#0007);
- z-index:20;pointer-events:none;opacity:.7
-}
-.book.final-view:before{display:none}
-.book.final-view .page-surface{border-color:rgba(201,164,92,.45)}
-.page-surface{
- position:absolute;inset:0;background:#151310;overflow:hidden;
- border:1px solid rgba(201,164,92,.3);transform-style:preserve-3d;
-}
-.page-surface img{width:100%;height:100%;object-fit:contain;display:block;background:#151310}
-.page-surface:after{content:"";position:absolute;inset:0;pointer-events:none;
- background:linear-gradient(90deg,rgba(0,0,0,.22),transparent 16%,transparent 84%,rgba(0,0,0,.2))}
-#leftPage{clip-path:inset(0 50% 0 0)}
-#rightPage{clip-path:inset(0 0 0 50%)}
-.sheet{
- position:absolute;top:0;left:50%;width:50%;height:100%;z-index:30;
- transform-origin:left center;transform-style:preserve-3d;
- transition:transform 850ms cubic-bezier(.2,.72,.18,1);
-}
-.sheet.turn{transform:rotateY(-180deg)}
-.face{
- position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;
- border:1px solid rgba(201,164,92,.26);background:#151310;
-}
-.face img{width:200%;height:100%;object-fit:contain;background:#151310}
-.front img{transform:translateX(-50%)}
-.back{transform:rotateY(180deg)}
-.back img{transform:none}
-.face:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0003,transparent 30%,#0002)}
-.page-credit{position:absolute;right:18px;bottom:16px;z-index:60;color:#fff;font-size:10px;line-height:1.55;letter-spacing:.08em;text-align:right;text-transform:none;text-shadow:0 1px 3px rgba(0,0,0,.85);pointer-events:none;background:rgba(12,10,8,.78);padding:7px 10px;border:1px solid rgba(201,164,92,.65);border-radius:3px;box-shadow:0 2px 10px rgba(0,0,0,.35)}
-.page-credit b{color:#f1d58e;font-weight:600}
-
-.page-label{
- text-align:center;margin-top:15px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#aaa197
-}
-.controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:15px}
-.arrow{
- width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,164,92,.55);
- background:transparent;color:#eee7db;font-size:26px;cursor:pointer
-}
-.arrow:disabled{opacity:.22;cursor:not-allowed}
-.track{width:min(600px,50vw);height:2px;background:#ffffff18}
-.track i{display:block;height:100%;background:var(--gold);width:3.85%;transition:width .5s ease}
-.subcontrols{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:12px}
-.sub{background:none;border:0;color:#9e968c;font-size:9px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;padding:6px}
-.sub:hover{color:var(--gold)}
-.footer{text-align:center;color:#716b63;font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:5px 20px 30px}
-.footer span{color:var(--gold);font-size:14px;margin:0 5px}
-
-#rotateNotice{
- position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;
- padding:24px;background:rgba(5,4,3,.86);backdrop-filter:blur(6px)
-}
-#rotateNotice.show{display:flex}
-.rotate-box{
- width:min(420px,92vw);padding:30px 24px;text-align:center;background:#f4efe6;color:#17130f;
- border:1px solid rgba(201,164,92,.8);box-shadow:0 24px 70px rgba(0,0,0,.55)
-}
-.rotate-icon{font-size:42px;color:#b18a45;margin-bottom:8px}
-.rotate-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;margin-bottom:12px}
-.rotate-text{font-size:13px;line-height:1.7;color:#5d554c}
-.rotate-box button{
- margin-top:20px;border:1px solid #b18a45;background:#b18a45;color:#fff;
- padding:12px 24px;letter-spacing:.12em;text-transform:uppercase;font-size:10px;cursor:pointer
-}
-
-@media(max-width:700px){
- header{height:58px;padding:0 13px}
- .album{width:96vw;padding-top:12px}
- .book{height:68vh;min-height:390px}
- .book:before{width:7px}
- .controls{gap:8px}.track{width:45vw}.arrow{width:44px;height:44px}
- .cover-names{font-size:clamp(58px,19vw,105px)}
-}
+.cover-card{width:min(980px,94vw);height:min(720px,90vh);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(210,173,98,.52);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(0,0,0,.28));box-shadow:0 45px 120px rgba(0,0,0,.75),inset 0 0 80px rgba(210,173,98,.035)}
+.cover-card:before{content:"";position:absolute;inset:20px;border:1px solid rgba(210,173,98,.17);pointer-events:none}.cover-card:after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(210,173,98,.12),transparent 68%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.crest{position:relative;z-index:2;font-family:Georgia,serif;color:var(--gold2);font-size:30px;letter-spacing:.3em;margin-left:.3em}.cover-line{position:relative;z-index:2;width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:25px 0}.cover-kicker{position:relative;z-index:2;font-size:10px;letter-spacing:.55em;text-transform:uppercase;color:#d0c6b7}.cover-names{position:relative;z-index:2;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(58px,9.5vw,118px);line-height:.86;font-weight:500;margin:22px 0 18px;color:var(--cream);text-shadow:0 8px 30px #000}.cover-names em{color:var(--gold2);font-style:normal;font-weight:400}.cover-date{position:relative;z-index:2;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:#b7aea3}
+.open{position:relative;z-index:2;margin-top:45px;border:1px solid rgba(242,214,148,.85);background:linear-gradient(180deg,#d8b66d,#9d7739);color:#fff;padding:15px 35px;letter-spacing:.22em;text-transform:uppercase;font-size:10px;cursor:pointer;box-shadow:0 12px 35px rgba(0,0,0,.45);transition:.25s}.open:hover{transform:translateY(-2px);box-shadow:0 16px 45px rgba(0,0,0,.6)}.cover-note{position:relative;z-index:2;margin-top:18px;font-size:9px;color:#a69d92;letter-spacing:.11em}
+header{height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 25px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(4,3,2,.72);backdrop-filter:blur(16px)}.logo{font-family:"Cormorant Garamond",Georgia,serif;font-size:22px;letter-spacing:.22em;color:#eee}.logo b{color:var(--gold);font-weight:400}.tools{display:flex;gap:8px}.tool{width:40px;height:40px;border:1px solid rgba(210,173,98,.35);background:rgba(255,255,255,.035);color:#decda9;cursor:pointer;font-size:16px;border-radius:50%}.tool.active{background:rgba(210,173,98,.18);border-color:rgba(242,214,148,.75);color:#f6dfa4}
+.album{width:min(1540px,96vw);margin:auto;padding:24px 0 0}.book-wrap{perspective:2800px;display:flex;justify-content:center}.book{position:relative;width:100%;height:min(69vw,76vh);min-height:440px;max-height:800px;background:#090807;border:1px solid rgba(210,173,98,.28);box-shadow:0 35px 110px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.025);overflow:hidden;transform-style:preserve-3d}
+/* blurred artwork behind the page prevents ugly empty/cropped areas */
+.art-bg,.art-bg img{position:absolute;inset:0;width:100%;height:100%}.art-bg{overflow:hidden;background:#090807}.art-bg img{object-fit:cover;filter:blur(24px);transform:scale(1.08);opacity:.30}.art-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.36),transparent 22%,transparent 78%,rgba(0,0,0,.36))}
+/* real book page */
+.page{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px 22px;background:linear-gradient(90deg,#d8d0c2,#fffdf7 3%,#fffdf8 97%,#cfc6b8);box-shadow:inset 0 0 0 1px rgba(70,50,25,.18),inset 12px 0 25px rgba(0,0,0,.10),inset -12px 0 25px rgba(0,0,0,.10);transform-style:preserve-3d;backface-visibility:hidden;overflow:hidden;transform-origin:left center}
+.page:before{content:"";position:absolute;inset:11px;border:1px solid rgba(156,119,55,.34);pointer-events:none;z-index:5}.page:after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(transparent,rgba(90,70,40,.13),transparent);opacity:.18;pointer-events:none}
+.photo{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 35px rgba(0,0,0,.25);background:#111}.photo img{position:relative;z-index:2;width:100%;height:100%;object-fit:contain;object-position:center;display:block}.photo .mat{position:absolute;inset:0;z-index:1;background:#f7f3eb}.photo .mat:after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 35px rgba(0,0,0,.10)}
+.turn-page{position:absolute;inset:0;z-index:20;transform-origin:left center;transform-style:preserve-3d;transition:transform 1050ms cubic-bezier(.2,.72,.16,1);pointer-events:none}.turn-page .turn-front,.turn-page .turn-back{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden}.turn-page .turn-front{background:linear-gradient(90deg,#d8d0c2,#fffdf7 3%,#fffdf8 97%,#cfc6b8)}.turn-page .turn-back{transform:rotateY(180deg);background:linear-gradient(270deg,#d8d0c2,#fffdf7 3%,#fffdf8 97%,#cfc6b8)}.turn-page img{width:100%;height:100%;object-fit:contain;padding:16px 22px;background:#f7f3eb}.turn-page.flip{transform:rotateY(-180deg)}
+.credit{position:absolute;right:30px;bottom:27px;z-index:40;color:#fff;font-size:11px;line-height:1.5;letter-spacing:.08em;text-align:right;background:rgba(10,8,6,.82);padding:8px 11px;border:1px solid rgba(210,173,98,.72);border-radius:4px;text-shadow:0 1px 4px #000;box-shadow:0 5px 18px rgba(0,0,0,.35);backdrop-filter:blur(5px)}.credit b{color:#f1d58e;font-weight:600}
+.final-page{display:none;position:absolute;inset:0;z-index:50;align-items:center;justify-content:center;background:#080706}.final-page img{width:100%;height:100%;object-fit:contain}.book.final .final-page{display:flex}.book.final .page,.book.final .turn-page,.book.final .art-bg,.book.final .credit{display:none}
+.page-label{text-align:center;margin-top:14px;font-size:10px;letter-spacing:.28em;color:#aaa198;text-transform:uppercase}.controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px}.arrow{width:48px;height:48px;border-radius:50%;border:1px solid rgba(210,173,98,.42);background:rgba(255,255,255,.035);color:#e0cda6;font-size:27px;cursor:pointer;transition:.2s}.arrow:hover:not(:disabled){transform:scale(1.05);background:rgba(210,173,98,.12)}.arrow:disabled{opacity:.25;cursor:default}.track{width:min(470px,48vw);height:2px;background:#3b342c;overflow:hidden}.track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#9c7435,#efd18a);transition:width .4s ease}.subcontrols{display:flex;justify-content:center;gap:16px;margin-top:10px;flex-wrap:wrap}.sub{background:none;border:0;color:#aaa198;font-size:9px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;padding:7px}.sub:hover{color:#ead9b6}.footer{text-align:center;color:#716b63;font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:7px 20px 24px}.footer span{color:var(--gold);padding:0 7px}
+@media(max-width:700px){header{height:56px;padding:0 13px}.logo{font-size:18px}.album{width:97vw;padding-top:12px}.book{height:70vh;min-height:390px}.page{padding:10px 12px}.page:before{inset:7px}.turn-page img{padding:10px 12px}.credit{right:16px;bottom:17px;font-size:9px;padding:6px 8px}.controls{gap:8px}.track{width:40vw}.arrow{width:43px;height:43px}.cover-names{font-size:clamp(50px,14vw,82px)}}
 </style>
 </head>
 <body>
-
-<section id="cover">
- <div class="cover-card">
-  <div class="crest">V · F</div>
-  <div class="cover-line"></div>
-  <div class="cover-kicker">The Wedding Album</div>
-  <div class="cover-names">Vaheda <em>&amp;</em> Farid</div>
-  <div class="cover-date">17 · 11 · 2025</div>
-  <button class="open" id="open" type="button">Open Wedding Album</button>
-  <div class="cover-note" id="note">For the best view, please keep your mobile on Auto Rotate.</div>
- </div>
-</section>
-
-
-<header>
- <div class="logo">VAHEDA <b>&amp;</b> FARID</div>
- <div class="tools">
-  <button class="tool" id="music" title="Music">♪</button>
-  <button class="tool" id="full" title="Fullscreen">⛶</button>
- </div>
-</header>
-
-<main class="album">
- <div class="book-wrap">
-  <div class="book" id="book">
-   <div class="page-surface" id="leftPage"><img src="page-01.jpg" alt=""></div>
-   <div class="page-surface" id="rightPage"><img src="page-02.jpg" alt=""><div class="page-credit">Made by <b>Farid Sheikh</b><br>Mob. <b>+91 9723148848</b></div></div>
-
-   <div class="sheet" id="sheet">
-    <div class="face front"><img id="frontImg" src="page-01.jpg" alt="Wedding album page"></div>
-    <div class="face back"><img id="backImg" src="page-02.jpg" alt="Wedding album page"></div>
-   </div>
-  </div>
- </div>
-
- <div class="page-label" id="label">01 — 02 / 26</div>
- <div class="controls">
-  <button class="arrow" id="prev" aria-label="Previous">‹</button>
-  <div class="track"><i id="progress"></i></div>
-  <button class="arrow" id="next" aria-label="Next">›</button>
- </div>
- <div class="subcontrols">
-  <button class="sub" id="play">Play Tenu Leke</button>
-  <button class="sub" id="auto">Auto Turn Pages</button>
- </div>
-</main>
-
-<div class="footer">A lifetime of memories <span>♡</span> Vaheda &amp; Farid</div>
+<section id="cover"><div class="cover-card">
+<div class="crest">V · F</div><div class="cover-line"></div><div class="cover-kicker">The Wedding Album</div>
+<div class="cover-names">Vaheda <em>&amp;</em> Farid</div><div class="cover-date">17 · 11 · 2025</div>
+<button class="open" id="open" type="button">Open Wedding Album</button>
+<div class="cover-note">For the best view, keep Auto Rotate ON and use Landscape mode.</div>
+</div></section>
+<header><div class="logo">VAHEDA <b>&amp;</b> FARID</div><div class="tools"><button class="tool" id="music" title="Music">♪</button><button class="tool active" id="sound" title="Page sound">♢</button><button class="tool" id="full" title="Fullscreen">⛶</button></div></header>
+<main class="album"><div class="book-wrap"><div class="book" id="book">
+<div class="art-bg"><img id="bgImg" src="page-01.jpg" alt=""></div>
+<div class="page" id="page"><div class="photo"><div class="mat"></div><img id="pageImg" src="page-01.jpg" alt="Wedding album page"></div></div>
+<div class="turn-page" id="turnPage"><div class="turn-front"><img id="turnFront" src="page-01.jpg" alt=""></div><div class="turn-back"><img id="turnBack" src="page-02.jpg" alt=""></div></div>
+<div class="final-page"><img id="finalImg" alt="Thank you"></div>
+<div class="credit" id="credit">Made by <b>Farid Sheikh</b><br>Mob. <b>+91 9723148848</b></div>
+</div></div>
+<div class="page-label" id="label">01 / 26</div>
+<div class="controls"><button class="arrow" id="prev">‹</button><div class="track"><i id="progress"></i></div><button class="arrow" id="next">›</button></div>
+<div class="subcontrols"><button class="sub" id="play">Play Tenu Leke</button><button class="sub" id="auto">Auto Turn Pages</button><button class="sub" id="hint">Page Sound ON</button></div>
+</main><div class="footer">A lifetime of memories <span>♡</span> Vaheda &amp; Farid</div>
 <audio id="audio" src="tenu_leke.mp3" preload="auto" loop></audio>
-
 <script>
-const total=27;
-let n=1, busy=false, autoTimer=null;
-const sheet=document.getElementById('sheet');
-const frontImg=document.getElementById('frontImg');
-const backImg=document.getElementById('backImg');
-const leftImg=document.querySelector('#leftPage img');
-const rightImg=document.querySelector('#rightPage img');
-const label=document.getElementById('label');
-const progress=document.getElementById('progress');
-const prev=document.getElementById('prev');
-const next=document.getElementById('next');
-const audio=document.getElementById('audio');
-const music=document.getElementById('music');
-const play=document.getElementById('play');
-const cover=document.getElementById('cover');
-const note=document.getElementById('note');
-const pageCredit=document.querySelector('.page-credit');
-
-function finalPage(){
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
- <defs><radialGradient id="g" cx="50%" cy="45%"><stop offset="0" stop-color="#2b2115"/><stop offset=".55" stop-color="#17120d"/><stop offset="1" stop-color="#070605"/></radialGradient></defs>
- <rect width="1600" height="1000" fill="url(#g)"/>
- <rect x="65" y="65" width="1470" height="870" rx="4" fill="none" stroke="#c9a45c" stroke-opacity=".45"/>
- <text x="800" y="320" text-anchor="middle" fill="#c9a45c" font-family="Georgia,serif" font-size="34" letter-spacing="10">WITH LOVE &amp; GRATITUDE</text>
- <text x="800" y="480" text-anchor="middle" fill="#f4efe6" font-family="Georgia,serif" font-size="68">Thank You</text>
- <text x="800" y="555" text-anchor="middle" fill="#aaa298" font-family="Arial,sans-serif" font-size="24" letter-spacing="3">FOR BEING PART OF OUR BEAUTIFUL JOURNEY</text>
- <text x="800" y="680" text-anchor="middle" fill="#c9a45c" font-family="Georgia,serif" font-size="30">Made by Farid Sheikh</text>
- <text x="800" y="730" text-anchor="middle" fill="#eee8dc" font-family="Arial,sans-serif" font-size="25" letter-spacing="2">Mob. +91 9723148848</text>
- <text x="800" y="850" text-anchor="middle" fill="#81796e" font-family="Arial,sans-serif" font-size="18" letter-spacing="4">VAHEDA &amp; FARID · 17 · 11 · 2025</text>
- </svg>`;
- return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
-}
-const FINAL_PAGE=finalPage();
-function file(k){if(k===27)return FINAL_PAGE; if(k<1||k>26)return ''; return `page-${String(k).padStart(2,'0')}.jpg`}
-function update(){
- const right=Math.min(total,n+1);
- label.textContent=String(n).padStart(2,'0')+' — '+String(right).padStart(2,'0')+' / '+String(total).padStart(2,'0');
- progress.style.width=(right/total*100)+'%';
- prev.disabled=n===1; next.disabled=n>=total-1;
-}
-function preload(k){
- if(k<1||k>total)return;
- const im=new Image();im.src=file(k);
-}
-function setPages(){
- const book=document.getElementById('book');
- book.classList.toggle('final-view', n===27);
- if(pageCredit)pageCredit.style.display=n===27?'none':'block';
- leftImg.src=file(n);
- rightImg.src=(n===27?file(27):file(Math.min(total,n+1)));
- frontImg.src=file(n);
- backImg.src=file(Math.min(total,n+1));
- preload(n+2);preload(n-1);
- update();
-}
-function turn(dir){
- if(busy)return;
- if(dir>0 && n>=total-1)return;
- if(dir<0 && n<=1)return;
- busy=true;
- if(dir>0){
-   const nextN=n+2;
-   const upcoming=nextN<=total?file(nextN):file(total);
-   backImg.src=upcoming;
-   sheet.classList.add('turn');
-   setTimeout(()=>{
-     n+=2;
-     sheet.classList.remove('turn');
-     setPages();
-     busy=false;
-   },850);
- }else{
-   const prevN=n-2;
-   const upcoming=prevN>=1?file(prevN):file(1);
-   frontImg.src=upcoming;
-   sheet.style.transition='none';
-   sheet.classList.add('turn');
-   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-     sheet.classList.remove('turn');
-     requestAnimationFrame(()=>{sheet.style.transition='transform 850ms cubic-bezier(.2,.72,.18,1)'});
-   }));
-   setTimeout(()=>{
-     n=Math.max(1,n-2);setPages();busy=false;
-   },850);
- }
-}
-async function tryMusic(){
- try{await audio.play();music.textContent='❚❚';play.textContent='Pause Tenu Leke';return true}
- catch(e){return false}
-}
-async function userMusic(){
- try{await audio.play();music.textContent='❚❚';play.textContent='Pause Tenu Leke'}
- catch(e){}
-}
-function pauseMusic(){audio.pause();music.textContent='♪';play.textContent='Play Tenu Leke'}
-
-next.onclick=()=>turn(1);
-prev.onclick=()=>turn(-1);
-music.onclick=()=>audio.paused?userMusic():pauseMusic();
-play.onclick=()=>audio.paused?userMusic():pauseMusic();
-
-document.querySelector('.open').addEventListener('click',async()=>{
- cover.classList.add('hide');
- const ok=await tryMusic();
- if(!ok)note.textContent='Press the Music button to start the song.';
-});
-
-document.getElementById('full').onclick=()=>{
- if(document.fullscreenElement)document.exitFullscreen();
- else document.documentElement.requestFullscreen?.();
-};
-
-document.getElementById('auto').onclick=()=>{
- if(autoTimer){
-  clearInterval(autoTimer);autoTimer=null;
-  document.getElementById('auto').textContent='Auto Turn Pages';
- }else{
-  document.getElementById('auto').textContent='Stop Auto Turn';
-  autoTimer=setInterval(()=>{
-   if(n<total-1)turn(1);else{clearInterval(autoTimer);autoTimer=null;document.getElementById('auto').textContent='Auto Turn Pages'}
-  },5200);
- }
-};
-
-document.addEventListener('keydown',e=>{
- if(e.key==='ArrowRight')turn(1);
- if(e.key==='ArrowLeft')turn(-1);
-});
-let startX=0;
-document.getElementById('book').addEventListener('touchstart',e=>startX=e.changedTouches[0].clientX,{passive:true});
-document.getElementById('book').addEventListener('touchend',e=>{
- const dx=e.changedTouches[0].clientX-startX;
- if(Math.abs(dx)>45)turn(dx<0?1:-1);
-},{passive:true});
-
-setPages();
-window.addEventListener('load',()=>setTimeout(async()=>{const ok=await tryMusic();if(!ok)note.textContent='Press the Music button to start the song.'},350));
-</script>
-</body>
-</html>
+const total=27;let n=1,busy=false,autoTimer=null,soundOn=true,audioCtx=null;
+const book=document.getElementById('book'),pageImg=document.getElementById('pageImg'),bgImg=document.getElementById('bgImg'),turnPage=document.getElementById('turnPage'),turnFront=document.getElementById('turnFront'),turnBack=document.getElementById('turnBack'),finalImg=document.getElementById('finalImg'),credit=document.getElementById('credit');
+const label=document.getElementById('label'),progress=document.getElementById('progress'),prev=document.getElementById('prev'),next=document.getElementById('next'),audio=document.getElementById('audio'),music=document.getElementById('music'),play=document.getElementById('play'),soundBtn=document.getElementById('sound'),hint=document.getElementById('hint'),cover=document.getElementById('cover');
+function finalPage(){const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000"><defs><radialGradient id="g" cx="50%" cy="42%"><stop offset="0" stop-color="#352817"/><stop offset=".55" stop-color="#17110b"/><stop offset="1" stop-color="#060504"/></radialGradient></defs><rect width="1600" height="1000" fill="url(#g)"/><rect x="55" y="55" width="1490" height="890" rx="5" fill="none" stroke="#d2ad62" stroke-opacity=".55"/><text x="800" y="315" text-anchor="middle" fill="#d2ad62" font-family="Georgia,serif" font-size="34" letter-spacing="10">WITH LOVE &amp; GRATITUDE</text><text x="800" y="475" text-anchor="middle" fill="#f7f1e6" font-family="Georgia,serif" font-size="72">Thank You</text><text x="800" y="550" text-anchor="middle" fill="#b6ada1" font-family="Arial,sans-serif" font-size="24" letter-spacing="3">FOR BEING PART OF OUR BEAUTIFUL JOURNEY</text><text x="800" y="685" text-anchor="middle" fill="#d2ad62" font-family="Georgia,serif" font-size="31">Made by Farid Sheikh</text><text x="800" y="735" text-anchor="middle" fill="#eee8dc" font-family="Arial,sans-serif" font-size="25" letter-spacing="2">Mob. +91 9723148848</text><text x="800" y="855" text-anchor="middle" fill="#827a70" font-family="Arial,sans-serif" font-size="18" letter-spacing="4">VAHEDA &amp; FARID · 17 · 11 · 2025</text></svg>`;return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)}
+const FINAL=finalPage();finalImg.src=FINAL;
+function file(k){return k===27?FINAL:`page-${String(k).padStart(2,'0')}.jpg`}
+function update(){label.textContent=String(n).padStart(2,'0')+' / '+String(total-1).padStart(2,'0');progress.style.width=(Math.min(n,total-1)/(total-1)*100)+'%';prev.disabled=n===1;next.disabled=n===total;book.classList.toggle('final',n===total);credit.style.display=n===total?'none':'block';}
+function preload(k){if(k<1||k>total-1)return;const im=new Image();im.src=file(k)}
+function setPage(){const src=file(n);pageImg.src=src;bgImg.src=src;turnFront.src=src;turnBack.src=file(Math.min(total-1,n+1));preload(n+1);preload(n+2);preload(n-1);update()}
+function pageSound(){if(!soundOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const now=audioCtx.currentTime;
+let buf=audioCtx.createBuffer(1,audioCtx.sampleRate*.18,audioCtx.sampleRate),data=buf.getChannelData(0);for(let i=0;i<data.length;i++){let t=i/data.length;data[i]=(Math.random()*2-1)*Math.pow(1-t,2.2)}
+let src=audioCtx.createBufferSource(),filter=audioCtx.createBiquadFilter(),gain=audioCtx.createGain();src.buffer=buf;filter.type='bandpass';filter.frequency.value=2400;filter.Q.value=.65;gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.18,now+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+.17);src.connect(filter).connect(gain).connect(audioCtx.destination);src.start(now);
+let osc=audioCtx.createOscillator(),g2=audioCtx.createGain();osc.type='sine';osc.frequency.setValueAtTime(115,now);osc.frequency.exponentialRampToValueAtTime(72,now+.12);g2.gain.setValueAtTime(.0001,now);g2.gain.exponentialRampToValueAtTime(.035,now+.01);g2.gain.exponentialRampToValueAtTime(.0001,now+.13);osc.connect(g2).connect(audioCtx.destination);osc.start(now);osc.stop(now+.14)}catch(e){}}
+function turn(dir){if(busy)return;if(dir>0&&n>=total)return;if(dir<0&&n<=1)return;busy=true;pageSound();if(dir>0){if(n===total-1){setTimeout(()=>{n=total;update();busy=false},1050);return}turnBack.src=file(n+1);turnPage.classList.remove('flip');void turnPage.offsetWidth;turnPage.classList.add('flip');setTimeout(()=>{n++;setPage();turnPage.classList.remove('flip');busy=false},1050)}else{if(n===total){n=total-1;setPage();busy=false;return}turnFront.src=file(n-1);turnPage.classList.remove('flip');void turnPage.offsetWidth;turnPage.classList.add('flip');setTimeout(()=>{n--;setPage();turnPage.classList.remove('flip');busy=false},1050)}}
+async function startMusic(){try{await audio.play();music.textContent='❚❚';play.textContent='Pause Tenu Leke'}catch(e){}}function stopMusic(){audio.pause();music.textContent='♪';play.textContent='Play Tenu Leke'}
+next.onclick=()=>turn(1);prev.onclick=()=>turn(-1);music.onclick=()=>audio.paused?startMusic():stopMusic();play.onclick=()=>audio.paused?startMusic():stopMusic();soundBtn.onclick=()=>{soundOn=!soundOn;soundBtn.classList.toggle('active',soundOn);hint.textContent=soundOn?'Page Sound ON':'Page Sound OFF'};hint.onclick=()=>soundBtn.click();
+document.getElementById('open').onclick=async()=>{cover.classList.add('hide');await startMusic();try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();await audioCtx.resume()}catch(e){}};
+document.getElementById('full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()};
+document.getElementById('auto').onclick=()=>{if(autoTimer){clearInterval(autoTimer);autoTimer=null;document.getElementById('auto').textContent='Auto Turn Pages'}else{document.getElementById('auto').textContent='Stop Auto Turn';autoTimer=setInterval(()=>{if(n<total)turn(1);else{clearInterval(autoTimer);autoTimer=null;document.getElementById('auto').textContent='Auto Turn Pages'}},5000)}};
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')turn(1);if(e.key==='ArrowLeft')turn(-1)});
+let startX=0;book.addEventListener('touchstart',e=>startX=e.changedTouches[0].clientX,{passive:true});book.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>45)turn(dx<0?1:-1)},{passive:true});setPage();
+</script></body></html>
