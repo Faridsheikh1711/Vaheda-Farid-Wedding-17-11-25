@@ -301,7 +301,6 @@ play.onclick=()=>audio.paused?userMusic():pauseMusic();
 
 document.querySelector('.open').addEventListener('click',async()=>{
  cover.classList.add('hide');
- playPageSound();
  const ok=await tryMusic();
  if(!ok)note.textContent='Press the Music button to start the song.';
 });
