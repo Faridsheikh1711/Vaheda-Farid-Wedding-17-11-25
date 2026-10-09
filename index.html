@@ -4,326 +4,48 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#090807">
-<title>Vaheda & Farid — Luxury Wedding Album</title>
+<title>Vaheda & Farid — Wedding Album</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap');
-
-:root{--bg:#090807;--paper:#f4efe6;--gold:#c9a45c;--text:#eee8dc;--muted:#aaa298}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);min-height:100%;font-family:Inter,Arial,sans-serif}
-body{overflow-x:hidden}
-button{font:inherit}
-#openAlbum,#startAlbum{position:absolute;opacity:0;pointer-events:none}
-#cover{
- position:fixed;inset:0;z-index:100;background:
- radial-gradient(circle at 50% 42%,rgba(201,164,92,.16),transparent 28%),
- linear-gradient(135deg,#050504,#17120d 58%,#060504);
- display:flex;align-items:center;justify-content:center;
- transition:opacity .9s ease,visibility .9s ease;
-}
-#cover.hide{opacity:0;visibility:hidden;pointer-events:none}
-.cover-card{text-align:center;padding:30px;animation:coverIn 1.2s ease both}
-.crest{font-family:"Cormorant Garamond",serif;color:var(--gold);font-size:18px;letter-spacing:.42em;margin-left:.42em}
-.cover-line{width:80px;height:1px;background:var(--gold);opacity:.7;margin:20px auto}
-.cover-kicker{font-size:10px;letter-spacing:.48em;text-transform:uppercase;color:#c9c2b7}
-.cover-names{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;font-size:clamp(65px,13vw,135px);line-height:.78;margin:24px 0 18px}
-.cover-names em{color:var(--gold);font-weight:300}
-.cover-date{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)}
-.open{
- appearance:none;-webkit-appearance:none;
- margin-top:34px;border:1px solid rgba(201,164,92,.8);background:transparent;color:#f7f0e3;
- padding:14px 30px;letter-spacing:.22em;text-transform:uppercase;font-size:10px;cursor:pointer
-}
-.open:hover{background:var(--gold);color:#111}
-.cover-note{margin-top:13px;font-size:9px;color:#81796e;letter-spacing:.08em}
-@keyframes coverIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
-
-header{
- height:66px;display:flex;align-items:center;justify-content:space-between;
- padding:0 26px;border-bottom:1px solid rgba(201,164,92,.18)
-}
-.logo{font-family:"Cormorant Garamond",serif;font-size:22px;letter-spacing:.12em}
-.logo b{color:var(--gold);font-weight:400}
-.tools{display:flex;gap:8px}
-.tool{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:#ffffff08;color:#eee;cursor:pointer}
-
-.album{width:min(1180px,94vw);margin:0 auto;padding:24px 0 38px}
-.book-wrap{
- width:100%;display:flex;justify-content:center;align-items:center;
- perspective:2400px;
-}
-.book{
- position:relative;width:min(1040px,100%);height:min(73vh,720px);min-height:430px;
- transform-style:preserve-3d;
- filter:drop-shadow(0 25px 35px rgba(0,0,0,.55));
-}
-.book:before{
- content:"";position:absolute;left:50%;top:0;bottom:0;width:12px;transform:translateX(-50%);
- background:linear-gradient(90deg,#0006,#fff1 45%,#0007);
- z-index:20;pointer-events:none;opacity:.7
-}
-.book.final-view:before{display:none}
-.book.final-view .page-surface{border-color:rgba(201,164,92,.45)}
-.page-surface{
- position:absolute;inset:0;background:#151310;overflow:hidden;
- border:1px solid rgba(201,164,92,.3);transform-style:preserve-3d;
-}
-.page-surface img{width:100%;height:100%;object-fit:contain;display:block;background:#151310}
-.page-surface:after{content:"";position:absolute;inset:0;pointer-events:none;
- background:linear-gradient(90deg,rgba(0,0,0,.22),transparent 16%,transparent 84%,rgba(0,0,0,.2))}
-#leftPage{clip-path:inset(0 50% 0 0)}
-#rightPage{clip-path:inset(0 0 0 50%)}
-.sheet{
- position:absolute;top:0;left:50%;width:50%;height:100%;z-index:30;
- transform-origin:left center;transform-style:preserve-3d;
- transition:transform 850ms cubic-bezier(.2,.72,.18,1);
-}
-.sheet.turn{transform:rotateY(-180deg)}
-.face{
- position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;
- border:1px solid rgba(201,164,92,.26);background:#151310;
-}
-.face img{width:200%;height:100%;object-fit:contain;background:#151310}
-.front img{transform:translateX(-50%)}
-.back{transform:rotateY(180deg)}
-.back img{transform:none}
-.face:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0003,transparent 30%,#0002)}
-.page-credit{position:absolute;right:18px;bottom:16px;z-index:60;color:#fff;font-size:10px;line-height:1.55;letter-spacing:.08em;text-align:right;text-transform:none;text-shadow:0 1px 3px rgba(0,0,0,.85);pointer-events:none;background:rgba(12,10,8,.78);padding:7px 10px;border:1px solid rgba(201,164,92,.65);border-radius:3px;box-shadow:0 2px 10px rgba(0,0,0,.35)}
-.page-credit b{color:#f1d58e;font-weight:600}
-
-.page-label{
- text-align:center;margin-top:15px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#aaa197
-}
-.controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:15px}
-.arrow{
- width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,164,92,.55);
- background:transparent;color:#eee7db;font-size:26px;cursor:pointer
-}
-.arrow:disabled{opacity:.22;cursor:not-allowed}
-.track{width:min(600px,50vw);height:2px;background:#ffffff18}
-.track i{display:block;height:100%;background:var(--gold);width:3.85%;transition:width .5s ease}
-.subcontrols{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:12px}
-.sub{background:none;border:0;color:#9e968c;font-size:9px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;padding:6px}
-.sub:hover{color:var(--gold)}
-.footer{text-align:center;color:#716b63;font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:5px 20px 30px}
-.footer span{color:var(--gold);font-size:14px;margin:0 5px}
-
-#rotateNotice{
- position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;
- padding:24px;background:rgba(5,4,3,.86);backdrop-filter:blur(6px)
-}
-#rotateNotice.show{display:flex}
-.rotate-box{
- width:min(420px,92vw);padding:30px 24px;text-align:center;background:#f4efe6;color:#17130f;
- border:1px solid rgba(201,164,92,.8);box-shadow:0 24px 70px rgba(0,0,0,.55)
-}
-.rotate-icon{font-size:42px;color:#b18a45;margin-bottom:8px}
-.rotate-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;margin-bottom:12px}
-.rotate-text{font-size:13px;line-height:1.7;color:#5d554c}
-.rotate-box button{
- margin-top:20px;border:1px solid #b18a45;background:#b18a45;color:#fff;
- padding:12px 24px;letter-spacing:.12em;text-transform:uppercase;font-size:10px;cursor:pointer
-}
-
-@media(max-width:700px){
- header{height:58px;padding:0 13px}
- .album{width:96vw;padding-top:12px}
- .book{height:68vh;min-height:390px}
- .book:before{width:7px}
- .controls{gap:8px}.track{width:45vw}.arrow{width:44px;height:44px}
- .cover-names{font-size:clamp(58px,19vw,105px)}
-}
+:root{--bg:#090807;--gold:#c9a45c;--text:#eee8dc;--muted:#aaa298}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}body{overflow-x:hidden}button{font:inherit}
+#cover{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 42%,rgba(201,164,92,.16),transparent 28%),linear-gradient(135deg,#050504,#17120d 58%,#060504);display:flex;align-items:center;justify-content:center;transition:opacity .9s ease,visibility .9s ease}
+#cover.hide{opacity:0;visibility:hidden;pointer-events:none}.cover-card{text-align:center;padding:30px;animation:coverIn 1.2s ease both}.crest{font-family:"Cormorant Garamond",serif;color:var(--gold);font-size:18px;letter-spacing:.42em;margin-left:.42em}.cover-line{width:80px;height:1px;background:var(--gold);opacity:.7;margin:20px auto}.cover-kicker{font-size:10px;letter-spacing:.48em;text-transform:uppercase;color:#c9c2b7}.cover-names{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;font-size:clamp(65px,13vw,135px);line-height:.78;margin:24px 0 18px}.cover-names em{color:var(--gold);font-weight:300}.cover-date{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)}
+.open{margin-top:34px;border:1px solid rgba(201,164,92,.8);background:transparent;color:#f7f0e3;padding:14px 30px;letter-spacing:.22em;text-transform:uppercase;font-size:10px;cursor:pointer}.open:hover{background:var(--gold);color:#111}.cover-note{margin-top:13px;font-size:9px;color:#81796e;letter-spacing:.08em}@keyframes coverIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
+header{height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;border-bottom:1px solid rgba(201,164,92,.18)}.logo{font-family:"Cormorant Garamond",serif;font-size:22px;letter-spacing:.12em}.logo b{color:var(--gold);font-weight:400}.tools{display:flex;gap:8px}.tool{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:#ffffff08;color:#eee;cursor:pointer}
+.album{width:min(1240px,96vw);margin:0 auto;padding:24px 0 38px}.book-wrap{display:flex;justify-content:center;align-items:center;perspective:2400px}.book{position:relative;width:min(1160px,100%);height:min(74vh,720px);min-height:390px;filter:drop-shadow(0 25px 35px rgba(0,0,0,.55));background:#151310;border:1px solid rgba(201,164,92,.34);overflow:hidden}.book:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:8px;transform:translateX(-50%);background:linear-gradient(90deg,#0007,#fff2 45%,#0008);z-index:20;pointer-events:none;opacity:.45}.sheet{position:absolute;inset:0;z-index:10;transform-style:preserve-3d;transform-origin:left center;transition:transform 850ms cubic-bezier(.2,.72,.18,1)}.sheet.turn{transform:rotateY(-180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;background:#151310}.face.back{transform:rotateY(180deg)}.face img{width:100%;height:100%;display:block;object-fit:contain;background:#151310}.face:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.12),transparent 20%,transparent 80%,rgba(0,0,0,.12))}.loading{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;background:#151310;color:#aaa;font-size:10px;letter-spacing:.22em;text-transform:uppercase}.loading.hide{display:none}.page-credit{position:absolute;right:18px;bottom:16px;z-index:30;color:#fff;font-size:10px;line-height:1.55;letter-spacing:.08em;text-align:right;text-shadow:0 1px 3px rgba(0,0,0,.85);pointer-events:none;background:rgba(12,10,8,.78);padding:7px 10px;border:1px solid rgba(201,164,92,.65);border-radius:3px}.page-credit b{color:#f1d58e;font-weight:600}
+.page-label{text-align:center;margin-top:15px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#aaa197}.controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:15px}.arrow{width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,164,92,.55);background:transparent;color:#eee7db;font-size:26px;cursor:pointer}.arrow:disabled{opacity:.22;cursor:not-allowed}.track{width:min(600px,50vw);height:2px;background:#ffffff18}.track i{display:block;height:100%;background:var(--gold);width:0;transition:width .5s ease}.subcontrols{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:12px}.sub{background:none;border:0;color:#9e968c;font-size:9px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;padding:6px}.sub:hover{color:var(--gold)}.footer{text-align:center;color:#716b63;font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:5px 20px 30px}.footer span{color:var(--gold);font-size:14px;margin:0 5px}
+@media(max-width:700px){header{height:58px;padding:0 13px}.album{width:97vw;padding-top:12px}.book{height:67vh;min-height:330px}.book:before{width:5px}.controls{gap:8px}.track{width:45vw}.arrow{width:44px;height:44px}.cover-names{font-size:clamp(58px,19vw,105px)}.page-credit{right:8px;bottom:8px;font-size:8px;padding:5px 7px}}
 </style>
 </head>
 <body>
-
-<section id="cover">
- <div class="cover-card">
-  <div class="crest">V · F</div>
-  <div class="cover-line"></div>
-  <div class="cover-kicker">The Wedding Album</div>
-  <div class="cover-names">Vaheda <em>&amp;</em> Farid</div>
-  <div class="cover-date">17 · 11 · 2025</div>
-  <button class="open" id="open" type="button">Open Wedding Album</button>
-  <div class="cover-note" id="note">For the best view, please keep your mobile on Auto Rotate.</div>
- </div>
-</section>
-
-
-<header>
- <div class="logo">VAHEDA <b>&amp;</b> FARID</div>
- <div class="tools">
-  <button class="tool" id="music" title="Music">♪</button>
-  <button class="tool" id="full" title="Fullscreen">⛶</button>
- </div>
-</header>
-
-<main class="album">
- <div class="book-wrap">
-  <div class="book" id="book">
-   <div class="page-surface" id="leftPage"><img src="page-01.jpg" alt=""></div>
-   <div class="page-surface" id="rightPage"><img src="page-02.jpg" alt=""><div class="page-credit">Made by <b>Farid Sheikh</b><br>Mob. <b>+91 9723148848</b></div></div>
-
-   <div class="sheet" id="sheet">
-    <div class="face front"><img id="frontImg" src="page-01.jpg" alt="Wedding album page"></div>
-    <div class="face back"><img id="backImg" src="page-02.jpg" alt="Wedding album page"></div>
-   </div>
-  </div>
- </div>
-
- <div class="page-label" id="label">01 — 02 / 26</div>
- <div class="controls">
-  <button class="arrow" id="prev" aria-label="Previous">‹</button>
-  <div class="track"><i id="progress"></i></div>
-  <button class="arrow" id="next" aria-label="Next">›</button>
- </div>
- <div class="subcontrols">
-  <button class="sub" id="play">Play Tenu Leke</button>
-  <button class="sub" id="auto">Auto Turn Pages</button>
- </div>
-</main>
-
+<section id="cover"><div class="cover-card"><div class="crest">V · F</div><div class="cover-line"></div><div class="cover-kicker">The Wedding Album</div><div class="cover-names">Vaheda <em>&amp;</em> Farid</div><div class="cover-date">17 · 11 · 2025</div><button class="open" id="open" type="button">Open Wedding Album</button><div class="cover-note" id="note">Tap Open to begin your memories.</div></div></section>
+<header><div class="logo">VAHEDA <b>&amp;</b> FARID</div><div class="tools"><button class="tool" id="music" title="Music">♪</button><button class="tool" id="full" title="Fullscreen">⛶</button></div></header>
+<main class="album"><div class="book-wrap"><div class="book" id="book"><div class="loading" id="loading">Loading memories…</div><div class="sheet" id="sheet"><div class="face front"><img id="frontImg" alt="Wedding album page"></div><div class="face back"><img id="backImg" alt="Wedding album page"></div></div><div class="page-credit">Made by <b>Farid Sheikh</b><br>Mob. <b>+91 9723148848</b></div></div></div><div class="page-label" id="label">01 / 36</div><div class="controls"><button class="arrow" id="prev" aria-label="Previous">‹</button><div class="track"><i id="progress"></i></div><button class="arrow" id="next" aria-label="Next">›</button></div><div class="subcontrols"><button class="sub" id="play">Play Music</button><button class="sub" id="auto">Auto Turn Pages</button></div></main>
 <div class="footer">A lifetime of memories <span>♡</span> Vaheda &amp; Farid</div>
-<audio id="audio" src="tenu_leke.mp3" preload="auto" loop></audio>
-
+<audio id="audio" src="song.mp3" preload="auto" loop></audio>
 <script>
-const total=27;
-let n=1, busy=false, autoTimer=null;
-const sheet=document.getElementById('sheet');
-const frontImg=document.getElementById('frontImg');
-const backImg=document.getElementById('backImg');
-const leftImg=document.querySelector('#leftPage img');
-const rightImg=document.querySelector('#rightPage img');
-const label=document.getElementById('label');
-const progress=document.getElementById('progress');
-const prev=document.getElementById('prev');
-const next=document.getElementById('next');
-const audio=document.getElementById('audio');
-const music=document.getElementById('music');
-const play=document.getElementById('play');
-const cover=document.getElementById('cover');
-const note=document.getElementById('note');
-const pageCredit=document.querySelector('.page-credit');
-
-function finalPage(){
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
- <defs><radialGradient id="g" cx="50%" cy="45%"><stop offset="0" stop-color="#2b2115"/><stop offset=".55" stop-color="#17120d"/><stop offset="1" stop-color="#070605"/></radialGradient></defs>
- <rect width="1600" height="1000" fill="url(#g)"/>
- <rect x="65" y="65" width="1470" height="870" rx="4" fill="none" stroke="#c9a45c" stroke-opacity=".45"/>
- <text x="800" y="320" text-anchor="middle" fill="#c9a45c" font-family="Georgia,serif" font-size="34" letter-spacing="10">WITH LOVE &amp; GRATITUDE</text>
- <text x="800" y="480" text-anchor="middle" fill="#f4efe6" font-family="Georgia,serif" font-size="68">Thank You</text>
- <text x="800" y="555" text-anchor="middle" fill="#aaa298" font-family="Arial,sans-serif" font-size="24" letter-spacing="3">FOR BEING PART OF OUR BEAUTIFUL JOURNEY</text>
- <text x="800" y="680" text-anchor="middle" fill="#c9a45c" font-family="Georgia,serif" font-size="30">Made by Farid Sheikh</text>
- <text x="800" y="730" text-anchor="middle" fill="#eee8dc" font-family="Arial,sans-serif" font-size="25" letter-spacing="2">Mob. +91 9723148848</text>
- <text x="800" y="850" text-anchor="middle" fill="#81796e" font-family="Arial,sans-serif" font-size="18" letter-spacing="4">VAHEDA &amp; FARID · 17 · 11 · 2025</text>
- </svg>`;
- return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
-}
+const PHOTO_COUNT=36, FINAL=37;
+let n=1,busy=false,autoTimer=null;
+const sheet=document.getElementById('sheet'),frontImg=document.getElementById('frontImg'),backImg=document.getElementById('backImg'),label=document.getElementById('label'),progress=document.getElementById('progress'),prev=document.getElementById('prev'),next=document.getElementById('next'),audio=document.getElementById('audio'),music=document.getElementById('music'),play=document.getElementById('play'),cover=document.getElementById('cover'),note=document.getElementById('note'),loading=document.getElementById('loading');
+function finalPage(){const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000"><defs><radialGradient id="g" cx="50%" cy="45%"><stop offset="0" stop-color="#2b2115"/><stop offset=".55" stop-color="#17120d"/><stop offset="1" stop-color="#070605"/></radialGradient></defs><rect width="1600" height="1000" fill="url(#g)"/><rect x="65" y="65" width="1470" height="870" rx="4" fill="none" stroke="#c9a45c" stroke-opacity=".45"/><text x="800" y="320" text-anchor="middle" fill="#c9a45c" font-family="Georgia,serif" font-size="34" letter-spacing="10">WITH LOVE &amp; GRATITUDE</text><text x="800" y="480" text-anchor="middle" fill="#f4efe6" font-family="Georgia,serif" font-size="68">Thank You</text><text x="800" y="555" text-anchor="middle" fill="#aaa298" font-family="Arial,sans-serif" font-size="24" letter-spacing="3">FOR BEING PART OF OUR BEAUTIFUL JOURNEY</text><text x="800" y="680" text-anchor="middle" fill="#c9a45c" font-family="Georgia,serif" font-size="30">Made by Farid Sheikh</text><text x="800" y="730" text-anchor="middle" fill="#eee8dc" font-family="Arial,sans-serif" font-size="25" letter-spacing="2">Mob. +91 9723148848</text><text x="800" y="850" text-anchor="middle" fill="#81796e" font-family="Arial,sans-serif" font-size="18" letter-spacing="4">FARID &amp; VAHEDA · 17 · 11 · 2025</text></svg>`;return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)}
 const FINAL_PAGE=finalPage();
-function file(k){if(k===27)return FINAL_PAGE; if(k<1||k>26)return ''; return `page-${String(k).padStart(2,'0')}.jpg`}
-function update(){
- const right=Math.min(total,n+1);
- label.textContent=String(n).padStart(2,'0')+' — '+String(right).padStart(2,'0')+' / '+String(total).padStart(2,'0');
- progress.style.width=(right/total*100)+'%';
- prev.disabled=n===1; next.disabled=n>=total-1;
-}
-function preload(k){
- if(k<1||k>total)return;
- const im=new Image();im.src=file(k);
-}
-function setPages(){
- const book=document.getElementById('book');
- book.classList.toggle('final-view', n===27);
- if(pageCredit)pageCredit.style.display=n===27?'none':'block';
- leftImg.src=file(n);
- rightImg.src=(n===27?file(27):file(Math.min(total,n+1)));
- frontImg.src=file(n);
- backImg.src=file(Math.min(total,n+1));
- preload(n+2);preload(n-1);
- update();
-}
-function turn(dir){
- if(busy)return;
- if(dir>0 && n>=total-1)return;
- if(dir<0 && n<=1)return;
- busy=true;
- if(dir>0){
-   const nextN=n+2;
-   const upcoming=nextN<=total?file(nextN):file(total);
-   backImg.src=upcoming;
-   sheet.classList.add('turn');
-   setTimeout(()=>{
-     n+=2;
-     sheet.classList.remove('turn');
-     setPages();
-     busy=false;
-   },850);
- }else{
-   const prevN=n-2;
-   const upcoming=prevN>=1?file(prevN):file(1);
-   frontImg.src=upcoming;
-   sheet.style.transition='none';
-   sheet.classList.add('turn');
-   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-     sheet.classList.remove('turn');
-     requestAnimationFrame(()=>{sheet.style.transition='transform 850ms cubic-bezier(.2,.72,.18,1)'});
-   }));
-   setTimeout(()=>{
-     n=Math.max(1,n-2);setPages();busy=false;
-   },850);
- }
-}
-async function tryMusic(){
- try{await audio.play();music.textContent='❚❚';play.textContent='Pause Tenu Leke';return true}
- catch(e){return false}
-}
-async function userMusic(){
- try{await audio.play();music.textContent='❚❚';play.textContent='Pause Tenu Leke'}
- catch(e){}
-}
-function pauseMusic(){audio.pause();music.textContent='♪';play.textContent='Play Tenu Leke'}
-
-next.onclick=()=>turn(1);
-prev.onclick=()=>turn(-1);
-music.onclick=()=>audio.paused?userMusic():pauseMusic();
-play.onclick=()=>audio.paused?userMusic():pauseMusic();
-
-document.querySelector('.open').addEventListener('click',async()=>{
- cover.classList.add('hide');
- const ok=await tryMusic();
- if(!ok)note.textContent='Press the Music button to start the song.';
-});
-
-document.getElementById('full').onclick=()=>{
- if(document.fullscreenElement)document.exitFullscreen();
- else document.documentElement.requestFullscreen?.();
-};
-
-document.getElementById('auto').onclick=()=>{
- if(autoTimer){
-  clearInterval(autoTimer);autoTimer=null;
-  document.getElementById('auto').textContent='Auto Turn Pages';
- }else{
-  document.getElementById('auto').textContent='Stop Auto Turn';
-  autoTimer=setInterval(()=>{
-   if(n<total-1)turn(1);else{clearInterval(autoTimer);autoTimer=null;document.getElementById('auto').textContent='Auto Turn Pages'}
-  },5200);
- }
-};
-
-document.addEventListener('keydown',e=>{
- if(e.key==='ArrowRight')turn(1);
- if(e.key==='ArrowLeft')turn(-1);
-});
-let startX=0;
-document.getElementById('book').addEventListener('touchstart',e=>startX=e.changedTouches[0].clientX,{passive:true});
-document.getElementById('book').addEventListener('touchend',e=>{
- const dx=e.changedTouches[0].clientX-startX;
- if(Math.abs(dx)>45)turn(dx<0?1:-1);
-},{passive:true});
-
+function file(k){if(k===FINAL)return FINAL_PAGE;if(k<1||k>PHOTO_COUNT)return '';return `page-${String(k).padStart(2,'0')}.jpg`}
+function update(){label.textContent=(n===FINAL?'Thank You':String(n).padStart(2,'0')+' / '+PHOTO_COUNT);progress.style.width=(Math.min(n,PHOTO_COUNT)/PHOTO_COUNT*100)+'%';prev.disabled=n===1;next.disabled=n===FINAL}
+function preload(k){if(k<1||k>FINAL)return;const im=new Image();im.src=file(k)}
+function showLoading(){loading.classList.remove('hide')}
+function hideLoading(){loading.classList.add('hide')}
+function loadImage(img,src){return new Promise(resolve=>{img.onload=()=>{hideLoading();resolve(true)};img.onerror=()=>{console.warn('Could not load',src);resolve(false)};img.src=src})}
+async function setPages(){showLoading();await loadImage(frontImg,file(n));await loadImage(backImg,file(Math.min(FINAL,n+1)));update();preload(n+2);preload(n-1)}
+async function turn(dir){if(busy)return;if(dir>0&&n>=FINAL)return;if(dir<0&&n<=1)return;busy=true;showLoading();if(dir>0){const nextN=Math.min(FINAL,n+1);await loadImage(backImg,file(nextN));sheet.classList.add('turn');setTimeout(async()=>{n=nextN;sheet.classList.remove('turn');await setPages();busy=false},850)}else{const prevN=Math.max(1,n-1);await loadImage(frontImg,file(prevN));sheet.style.transition='none';sheet.classList.add('turn');requestAnimationFrame(()=>requestAnimationFrame(()=>{sheet.classList.remove('turn');requestAnimationFrame(()=>sheet.style.transition='transform 850ms cubic-bezier(.2,.72,.18,1)')}));setTimeout(async()=>{n=prevN;await setPages();busy=false},850)}}
+async function userMusic(){try{await audio.play();music.textContent='❚❚';play.textContent='Pause Music'}catch(e){note.textContent='Tap the Music button to start the song.'}}
+function pauseMusic(){audio.pause();music.textContent='♪';play.textContent='Play Music'}
+next.onclick=()=>turn(1);prev.onclick=()=>turn(-1);music.onclick=()=>audio.paused?userMusic():pauseMusic();play.onclick=()=>audio.paused?userMusic():pauseMusic();
+document.getElementById('open').onclick=async()=>{cover.classList.add('hide');try{await audio.play();music.textContent='❚❚';play.textContent='Pause Music'}catch(e){note.textContent='Press the Music button to start the song.'}};
+document.getElementById('full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()};
+document.getElementById('auto').onclick=()=>{if(autoTimer){clearInterval(autoTimer);autoTimer=null;document.getElementById('auto').textContent='Auto Turn Pages'}else{document.getElementById('auto').textContent='Stop Auto Turn';autoTimer=setInterval(()=>{if(n<FINAL)turn(1);else{clearInterval(autoTimer);autoTimer=null;document.getElementById('auto').textContent='Auto Turn Pages'}},5000)}};
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')turn(1);if(e.key==='ArrowLeft')turn(-1)});
+let startX=0;document.getElementById('book').addEventListener('touchstart',e=>startX=e.changedTouches[0].clientX,{passive:true});document.getElementById('book').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>45)turn(dx<0?1:-1)},{passive:true});
 setPages();
-window.addEventListener('load',()=>setTimeout(async()=>{const ok=await tryMusic();if(!ok)note.textContent='Press the Music button to start the song.'},350));
 </script>
-</body>
-</html>
+</body></html>
